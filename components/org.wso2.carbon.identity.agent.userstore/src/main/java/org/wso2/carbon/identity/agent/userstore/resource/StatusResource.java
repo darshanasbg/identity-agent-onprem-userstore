@@ -38,6 +38,7 @@ import javax.ws.rs.core.Response;
 public class StatusResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StatusResource.class);
+    private static final String SUCCESS_MESSAGE = "{ \"Status\" : \"Success\" }";
 
     /**
      * @return 200 OK if the connection is healthy,
@@ -49,9 +50,9 @@ public class StatusResource {
     public Response checkAgentStatus() {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.info("Checking agent health.");
+            LOGGER.debug("Checking agent health.");
         }
-        return Response.status(Response.Status.OK).build();
+        return Response.ok(SUCCESS_MESSAGE, MediaType.APPLICATION_JSON).build();
     }
 
     @GET
@@ -60,8 +61,9 @@ public class StatusResource {
     public Response checkLDAPStatus() {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.info("Checking agent LDAP health.");
+            LOGGER.debug("Checking agent LDAP health.");
         }
+
         try {
             UserStoreManager userStoreManager = UserStoreManagerBuilder.getUserStoreManager();
             boolean connectionStatus = userStoreManager.getConnectionStatus();
@@ -74,7 +76,8 @@ public class StatusResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 
         }
-        return Response.status(Response.Status.OK).build();
+
+        return Response.ok(SUCCESS_MESSAGE, MediaType.APPLICATION_JSON).build();
     }
 
 }
