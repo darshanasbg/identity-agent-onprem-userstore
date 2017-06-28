@@ -45,7 +45,7 @@ public class StatusResource {
     public Response checkHealth() {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.info("Checking health in identity broker.");
+            LOGGER.debug("Checking health in identity broker.");
         }
         return Response.status(Response.Status.OK).build();
     }
